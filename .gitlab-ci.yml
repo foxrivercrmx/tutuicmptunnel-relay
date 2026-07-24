@@ -1,0 +1,18 @@
+stages:
+  - build
+
+build_backend:
+  stage: build
+  image: golang:1.25-alpine
+  parallel:
+    matrix:
+      - GOOS: linux
+        GOARCH: [amd64, arm64]
+  script:
+    - echo "Start compile backend for arch $GOOS/$GOARCH..."
+    - env CGO_ENABLED=0 go build -ldflags="-s -w" -o tutu-relay-$GOOS-$GOARCH .
+  artifacts:
+    name: "tutu-relay-$GOOS-$GOARCH"
+    paths:
+      - tutu-relay-$GOOS-$GOARCH
+    expire_in: 1 week
