@@ -3,7 +3,7 @@ stages:
 
 build_backend:
   stage: build
-  image: golang:1.25-alpine
+  image: golang:1.26-alpine
   parallel:
     matrix:
       - GOOS: linux
